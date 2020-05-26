@@ -1,6 +1,8 @@
 <template>
   <header class="header">
-    <h1 class="logo">My Todo</h1>
+    <h1 class="logo">
+      <span class="blind">MyTodo</span>
+    </h1>
     <p class="header__date">{{ timestamp }}</p>
   </header>
 </template>
@@ -35,34 +37,24 @@ export default {
 .header {
   max-width: $max-width;
   margin: 0 auto;
-  padding: 0 $padding;
-  height: 60px;
+  padding: 20px 0 55px;
+  color: #fff;
   @include flexbox;
   @include align-items(center);
   @include justify-content(space-between);
 
-  //****
-  color: #fff;
-  background-color: $cl-main;
-  //****
-
   &__date {
-    // color: #555;
     letter-spacing: 0.02rem;
-    font-size: 12px;
-
-    @include res {
-      font-size: 11px;
-    }
+    font-size: 1.2rem;
   }
 }
 
 .logo {
-  // color: $cl-main;
-  font-size: 17px;
-
-  @include res {
-    font-size: 15px;
-  }
+  width: 5.8rem;
+  height: 1.6rem;
+  background-size: 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: icon("logo", "ffffff");
 }
 </style>

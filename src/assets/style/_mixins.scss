@@ -30,6 +30,15 @@
   }
 }
 
+@mixin invisible {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
 //웹키트 탭 하이라이트 컬러
 @mixin tap-highlight {
   -webkit-tap-highlight-color: rgba(255, 249, 86, 0.2);

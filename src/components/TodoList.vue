@@ -2,11 +2,42 @@
   <ul class="list">
     <li class="list__item">
       <input type="checkbox" id="list-item-1" />
-      <label for="list-item-1">
-        <p class="list__text">Smile! :)</p>
+      <label for="list-item-1" class="list__label">
+        <span class="icon-check"></span>
+        <p class="list__text">Be Happy</p>
       </label>
-      <p class="list__date">5/26</p>
-      <button class="list__delete">Delete</button>
+      <div class="list__right">
+        <button class="list__delete">
+          <div class="blind">Delete</div>
+        </button>
+        <p class="list__date">5/26</p>
+      </div>
+    </li>
+    <li class="list__item">
+      <input type="checkbox" id="list-item-2" />
+      <label for="list-item-2" class="list__label">
+        <span class="icon-check"></span>
+        <p class="list__text">Smile :)</p>
+      </label>
+      <div class="list__right">
+        <button class="list__delete">
+          <div class="blind">Delete</div>
+        </button>
+        <p class="list__date">5/26</p>
+      </div>
+    </li>
+    <li class="list__item">
+      <input type="checkbox" id="list-item-3" />
+      <label for="list-item-3" class="list__label">
+        <span class="icon-check"></span>
+        <p class="list__text">Don’t give up, I won’t give up</p>
+      </label>
+      <div class="list__right">
+        <button class="list__delete">
+          <div class="blind">Delete</div>
+        </button>
+        <p class="list__date">5/26</p>
+      </div>
     </li>
   </ul>
 </template>
@@ -16,4 +47,188 @@ export default {};
 </script>
 
 <style lang="scss">
+.list {
+  position: relative;
+  max-width: $max-width;
+  margin: 2.1rem auto 0;
+
+  &__item {
+    position: relative;
+    width: 100%;
+    padding: 0 1.4rem 0 4.5rem;
+    background-color: #fff;
+    border-radius: 4px;
+    @include flexbox;
+    @include align-items(center);
+
+    &:not(:first-child) {
+      margin-top: 1.2rem;
+    }
+  }
+
+  input {
+    @include invisible;
+
+    &:checked + label {
+      .icon-check:before {
+        height: 0.74rem;
+      }
+
+      &:after {
+        opacity: 1;
+      }
+
+      .list__text {
+        color: #bababa;
+        text-decoration: line-through;
+
+        // &:before {
+        //   width: 100%;
+        //   transition: width 0.3s;
+        // }
+      }
+    }
+  }
+
+  &__label {
+    padding: 1.6rem 0;
+    font-size: 1.7rem;
+    line-height: 1.24;
+    letter-spacing: 0.017rem;
+    color: #141313;
+    min-width: 0;
+    flex-basis: 100%;
+    cursor: pointer;
+
+    &:before {
+      position: absolute;
+      top: 50%;
+      left: 1.4rem;
+      transform: translateY(-50%);
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      border: solid 1px #818181;
+      background-color: #ffffff;
+      content: "";
+      cursor: pointer;
+    }
+
+    &:after {
+      opacity: 0;
+      position: absolute;
+      display: block;
+      width: 2rem;
+      height: 2rem;
+      top: 50%;
+      left: 1.4rem;
+      transform: translateY(-50%);
+      background-size: 1.4rem 1.4rem;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-image: icon("check", "363636");
+      transition: opacity 0.15s;
+      content: "";
+    }
+
+    // .icon-check {
+    //   &:before,
+    //   &:after {
+    //     z-index: 1;
+    //     position: absolute;
+    //     width: 0.2rem;
+    //     background-color: #000;
+    //     content: "";
+    //     border-radius: 1px;
+    //     transition: height 2s;
+    //   }
+
+    //   &:before {
+    //     top: 2.45rem;
+    //     left: 1.98rem;
+    //     height: 0rem;
+    //     transform: rotate(-40deg);
+    //   }
+
+    //   &:after {
+    //     top: 2.1rem;
+    //     left: 2.45rem;
+    //     height: 1.2rem;
+    //     transform: rotate(40deg);
+    //   }
+    // }
+  }
+
+  &__text {
+    position: relative;
+    width: 100%;
+    @include ellipsis(1);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: color 0.15s;
+
+    // &:before {
+    //   top: 50%;
+    //   left: 0;
+    //   position: absolute;
+    //   width: 0;
+    //   height: 2px;
+    //   background: #bababa;
+    //   transform: translateY(-50%);
+    //   transition: width 0.3s;
+    //   content: "";
+    // }
+  }
+
+  &__right {
+    margin-left: 1.3rem;
+    text-align: right;
+  }
+
+  &__delete {
+    position: relative;
+    width: 1rem;
+    height: 1rem;
+    padding: 0.25rem;
+    padding-right: 0;
+    box-sizing: content-box;
+    margin-left: auto;
+    margin-bottom: 0.5rem;
+
+    &:before,
+    &:after {
+      top: 0.2rem;
+      right: 0.4rem;
+      position: absolute;
+      display: block;
+      content: "";
+      width: 0.1rem;
+      height: 1.1rem;
+      background-color: #ccc;
+      transition: background-color 0.15s;
+    }
+
+    &:before {
+      transform: rotate(-40deg);
+    }
+
+    &:after {
+      transform: rotate(40deg);
+    }
+
+    &:hover {
+      &:before,
+      &:after {
+        background-color: #343434;
+      }
+    }
+  }
+
+  &__date {
+    font-size: 1.1rem;
+    color: #939393;
+    letter-spacing: 0.02rem;
+  }
+}
 </style>

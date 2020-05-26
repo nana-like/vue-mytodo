@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-    <TodoHeader />
-    <TodoTitle />
-    <main class="main">
+    <div class="top">
+      <TodoHeader />
+      <TodoTitle />
       <TodoInput />
+    </div>
+    <div class="body">
       <TodoController />
       <TodoList />
       <TodoFooter />
-    </main>
+    </div>
   </div>
 </template>
 
@@ -34,4 +36,15 @@ export default {
 
 <style lang="scss">
 @import "./assets/style/_reset";
+
+.top {
+  padding: 0 $padding 4.5rem;
+  width: 100%;
+  background-image: linear-gradient(145deg, #3770cc 20%, #ce91c9 84%);
+}
+
+.body {
+  padding: 3rem $padding;
+  background-color: #efefef;
+}
 </style>
