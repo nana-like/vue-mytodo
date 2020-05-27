@@ -7,12 +7,18 @@
         <option value="date-asc">Oldest</option>
       </select>
     </div>
-    <button class="clear">Clear All</button>
+    <button class="clear" v-on:click="clearTodo">Clear All</button>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    clearTodo() {
+      localStorage.clear();
+    }
+  }
+};
 </script>
 
 <style lang="scss">

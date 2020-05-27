@@ -1,49 +1,50 @@
 <template>
   <ul class="list">
-    <li class="list__item">
-      <input type="checkbox" id="list-item-1" />
-      <label for="list-item-1" class="list__label">
+    <li class="list__item" v-for="(todoItem, index) in todoItems" v-bind:key="todoItem.item">
+      <input type="checkbox" v-bind:id="todoItem.item" />
+      <label v-bind:for="todoItem.item" class="list__label">
         <span class="icon-check"></span>
-        <p class="list__text">Be Happy</p>
+        <p class="list__text">{{ todoItem.item }}</p>
       </label>
       <div class="list__right">
-        <button class="list__delete">
+        <button class="list__delete" v-on:click="removeTodo(todoItem, index)">
           <div class="blind">Delete</div>
         </button>
-        <p class="list__date">5/26</p>
-      </div>
-    </li>
-    <li class="list__item">
-      <input type="checkbox" id="list-item-2" />
-      <label for="list-item-2" class="list__label">
-        <span class="icon-check"></span>
-        <p class="list__text">Smile :)</p>
-      </label>
-      <div class="list__right">
-        <button class="list__delete">
-          <div class="blind">Delete</div>
-        </button>
-        <p class="list__date">5/26</p>
-      </div>
-    </li>
-    <li class="list__item">
-      <input type="checkbox" id="list-item-3" />
-      <label for="list-item-3" class="list__label">
-        <span class="icon-check"></span>
-        <p class="list__text">Don’t give up, I won’t give up</p>
-      </label>
-      <div class="list__right">
-        <button class="list__delete">
-          <div class="blind">Delete</div>
-        </button>
-        <p class="list__date">5/26</p>
+        <p class="list__date">{{ todoItem.date }}</p>
       </div>
     </li>
   </ul>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      todoItems: []
+    };
+  },
+  methods: {
+    removeTodo(todoItem, index) {
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index, 1);
+    }
+  },
+  created() {
+    if (localStorage.length > 0) {
+      for (let i = 0; i < localStorage.length; i++) {
+        if (
+          localStorage.key(i) !== "loglevel:webpack-dev-server" &&
+          localStorage.key(i) !== "csCursors" &&
+          localStorage.key(i) !== "csPointers"
+        ) {
+          this.todoItems.push(
+            JSON.parse(localStorage.getItem(localStorage.key(i)))
+          );
+        }
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss">
@@ -182,6 +183,7 @@ export default {};
   }
 
   &__right {
+    min-width: 5rem;
     margin-left: 1.3rem;
     text-align: right;
   }
