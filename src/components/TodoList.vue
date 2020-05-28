@@ -1,6 +1,6 @@
 <template>
   <ul class="list">
-    <li class="list__item" v-for="(todoItem, index) in todoItems" v-bind:key="todoItem.item">
+    <li class="list__item" v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item">
       <input type="checkbox" v-bind:id="todoItem.item" />
       <label v-bind:for="todoItem.item" class="list__label">
         <span class="icon-check"></span>
@@ -18,30 +18,11 @@
 
 <script>
 export default {
-  data() {
-    return {
-      todoItems: []
-    };
-  },
+  props: ["propsdata"],
   methods: {
     removeTodo(todoItem, index) {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);
-    }
-  },
-  created() {
-    if (localStorage.length > 0) {
-      for (let i = 0; i < localStorage.length; i++) {
-        if (
-          localStorage.key(i) !== "loglevel:webpack-dev-server" &&
-          localStorage.key(i) !== "csCursors" &&
-          localStorage.key(i) !== "csPointers"
-        ) {
-          this.todoItems.push(
-            JSON.parse(localStorage.getItem(localStorage.key(i)))
-          );
-        }
-      }
     }
   }
 };
