@@ -47,7 +47,6 @@ export default {
 
     &-count {
       font-size: 5.4rem;
-      line-height: 110%;
     }
 
     &-total {
@@ -57,7 +56,7 @@ export default {
     &-bottom {
       display: block;
       font-size: 2.8rem;
-      line-height: 90%;
+      line-height: 50%;
     }
   }
 }

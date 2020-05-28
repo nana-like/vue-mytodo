@@ -6,7 +6,7 @@
       <TodoInput v-on:addItem="addOneItem" />
     </div>
     <div class="body">
-      <TodoController v-on:clearAll="clearAllItem" />
+      <TodoController v-on:sortItem="sortAllItem" v-on:clearAll="clearAllItem" />
       <TodoList
         v-bind:propsdata="todoItems"
         v-on:removeItem="removeOneItem"
@@ -75,6 +75,23 @@ export default {
     clearAllItem() {
       this.todoItems = [];
       localStorage.clear();
+    },
+    sortTodoLatest() {
+      this.todoItems.sort(function(a, b) {
+        return b.time - a.time;
+      });
+    },
+    sortTodoOldest() {
+      this.todoItems.sort(function(a, b) {
+        return a.time - b.time;
+      });
+    },
+    sortAllItem(selectedSort) {
+      if (selectedSort.value === "date-desc") {
+        this.sortTodoLatest();
+      } else if (selectedSort.value === "date-asc") {
+        this.sortTodoOldest();
+      }
     }
   },
   created() {
@@ -91,6 +108,9 @@ export default {
         }
       }
     }
+  },
+  mounted() {
+    this.sortTodoOldest();
   },
   components: {
     TodoHeader,
