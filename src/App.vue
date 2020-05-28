@@ -2,7 +2,7 @@
   <div id="app">
     <div class="top">
       <TodoHeader />
-      <TodoTitle />
+      <TodoTitle v-bind:propsdata="checkCount" />
       <TodoInput v-on:addItem="addOneItem" />
     </div>
     <div class="body">
@@ -34,6 +34,25 @@ export default {
       todoItems: []
     };
   },
+  computed: {
+    checkCount() {
+      const checkLeftItems = () => {
+        let leftCount = 0;
+        for (let i = 0; i < this.todoItems.length; i++) {
+          if (this.todoItems[i].completed === false) {
+            leftCount++;
+          }
+        }
+        return leftCount;
+      };
+
+      const count = {
+        total: this.todoItems.length,
+        left: checkLeftItems()
+      };
+      return count;
+    }
+  },
   methods: {
     addOneItem(todoItem) {
       var value = {
@@ -54,6 +73,7 @@ export default {
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
     clearAllItem() {
+      this.todoItems = [];
       localStorage.clear();
     }
   },

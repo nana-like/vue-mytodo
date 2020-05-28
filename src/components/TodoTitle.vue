@@ -3,18 +3,22 @@
     <p class="title__message">{{ message }}</p>
     <p class="title__task">
       <span class="title__task-top">You've got</span>
-      <span class="title__task-total">{{ taskTotal }}</span>
+      <span class="title__task-count">
+        <em class="title__task-left">{{ propsdata.left }}</em>
+        <em v-if="propsdata.total" class="title__task-total">&nbsp;/ {{ propsdata.total }}</em>
+      </span>
       <span class="title__task-bottom">tasks today !</span>
+      <span class="title__task-info"></span>
     </p>
   </div>
 </template>
 
 <script>
 export default {
+  props: ["propsdata"],
   data() {
     return {
-      message: "Good evening, Nana.",
-      taskTotal: 3
+      message: "Good evening, Nana."
     };
   }
 };
@@ -41,9 +45,13 @@ export default {
       font-size: 2.6rem;
     }
 
-    &-total {
+    &-count {
       font-size: 5.4rem;
       line-height: 110%;
+    }
+
+    &-total {
+      font-size: 50%;
     }
 
     &-bottom {
