@@ -1,8 +1,13 @@
 <template>
   <ul class="list">
     <li class="list__item" v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item">
-      <input type="checkbox" v-bind:id="todoItem.item" />
-      <label v-bind:for="todoItem.item" v-on:click="toggleComplete(todoItem)" class="list__label">
+      <input
+        type="checkbox"
+        v-bind:id="todoItem.item"
+        v-bind:checked="todoItem.completed === true"
+        v-on:change="toggleComplete(todoItem)"
+      />
+      <label v-bind:for="todoItem.item" class="list__label">
         <span class="icon-check"></span>
         <p class="list__text">{{ todoItem.item }}</p>
       </label>
@@ -21,12 +26,10 @@ export default {
   props: ["propsdata"],
   methods: {
     removeTodo(todoItem, index) {
-      localStorage.removeItem(todoItem.item);
-      this.todoItems.splice(index, 1);
+      this.$emit("removeItem", todoItem, index);
     },
     toggleComplete(todoItem) {
-      todoItem.completed = !todoItem.completed;
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+      this.$emit("toggleItem", todoItem);
     }
   }
 };

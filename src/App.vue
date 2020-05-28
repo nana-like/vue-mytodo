@@ -6,8 +6,12 @@
       <TodoInput v-on:addItem="addOneItem" />
     </div>
     <div class="body">
-      <TodoController />
-      <TodoList v-bind:propsdata="todoItems" />
+      <TodoController v-on:clearAll="clearAllItem" />
+      <TodoList
+        v-bind:propsdata="todoItems"
+        v-on:removeItem="removeOneItem"
+        v-on:toggleItem="toggleOneItem"
+      />
       <TodoFooter />
     </div>
   </div>
@@ -40,6 +44,17 @@ export default {
       };
       localStorage.setItem(todoItem, JSON.stringify(value));
       this.todoItems.push(value);
+    },
+    removeOneItem(todoItem, index) {
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index, 1);
+    },
+    toggleOneItem(todoItem) {
+      todoItem.completed = !todoItem.completed;
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    },
+    clearAllItem() {
+      localStorage.clear();
     }
   },
   created() {
