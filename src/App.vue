@@ -3,7 +3,7 @@
     <div class="top">
       <TodoHeader />
       <TodoTitle />
-      <TodoInput />
+      <TodoInput v-on:addItem="addOneItem" />
     </div>
     <div class="body">
       <TodoController />
@@ -21,12 +21,26 @@ import TodoController from "./components/TodoController";
 import TodoList from "./components/TodoList";
 import TodoFooter from "./components/TodoFooter";
 
+import getDate from "./assets/commonJS/getDate.js";
+
 export default {
   name: "App",
   data() {
     return {
       todoItems: []
     };
+  },
+  methods: {
+    addOneItem(todoItem) {
+      var value = {
+        item: todoItem,
+        date: `${getDate().date} ${getDate().week}`,
+        time: getDate().time,
+        completed: false
+      };
+      localStorage.setItem(todoItem, JSON.stringify(value));
+      this.todoItems.push(value);
+    }
   },
   created() {
     if (localStorage.length > 0) {

@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import getDate from "../assets/commonJS/getDate.js";
-
 export default {
   data() {
     return {
@@ -25,12 +23,7 @@ export default {
   methods: {
     addTodoItem() {
       if (this.newTodoItem !== "") {
-        var value = {
-          item: this.newTodoItem,
-          date: `${getDate().date} ${getDate().week}`,
-          time: getDate().time
-        };
-        localStorage.setItem(this.newTodoItem, JSON.stringify(value));
+        this.$emit("addItem", this.newTodoItem);
         this.clearInput();
       }
     },

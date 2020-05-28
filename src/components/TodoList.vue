@@ -2,7 +2,7 @@
   <ul class="list">
     <li class="list__item" v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item">
       <input type="checkbox" v-bind:id="todoItem.item" />
-      <label v-bind:for="todoItem.item" class="list__label">
+      <label v-bind:for="todoItem.item" v-on:click="toggleComplete(todoItem)" class="list__label">
         <span class="icon-check"></span>
         <p class="list__text">{{ todoItem.item }}</p>
       </label>
@@ -23,6 +23,10 @@ export default {
     removeTodo(todoItem, index) {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);
+    },
+    toggleComplete(todoItem) {
+      todoItem.completed = !todoItem.completed;
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     }
   }
 };
