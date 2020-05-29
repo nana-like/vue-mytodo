@@ -1,9 +1,18 @@
 <template>
   <div id="app">
     <div class="top">
-      <TodoHeader />
-      <TodoTitle v-bind:propsdata="checkCount" />
-      <TodoInput v-on:addItem="addOneItem" />
+      <div v-if="userName">
+        <TodoHeader />
+        <TodoTitle
+          v-bind:propCount="checkCount"
+          v-bind:propName="userName"
+          v-on:changeName="changeUserName"
+        />
+        <TodoInput v-on:addItem="addOneItem" />
+      </div>
+      <div v-else>
+        <TodoHello v-on:addName="addUserName" />
+      </div>
     </div>
     <div class="body">
       <TodoController v-on:sortItem="sortAllItem" v-on:clearAll="clearAllItem" />
@@ -24,6 +33,7 @@ import TodoInput from "./components/TodoInput";
 import TodoController from "./components/TodoController";
 import TodoList from "./components/TodoList";
 import TodoFooter from "./components/TodoFooter";
+import TodoHello from "./components/TodoHello";
 
 import getDate from "./assets/commonJS/getDate.js";
 
@@ -31,7 +41,8 @@ export default {
   name: "App",
   data() {
     return {
-      todoItems: []
+      todoItems: [],
+      userName: ""
     };
   },
   computed: {
@@ -92,15 +103,26 @@ export default {
       } else if (selectedSort.value === "date-asc") {
         this.sortTodoOldest();
       }
+    },
+    addUserName(userName) {
+      localStorage.setItem("userName", userName);
+      this.userName = userName;
+    },
+    changeUserName(userName) {
+      localStorage.setItem("userName", userName);
+      this.userName = userName;
     }
   },
   created() {
+    this.userName = localStorage.getItem("userName");
+
     if (localStorage.length > 0) {
       for (let i = 0; i < localStorage.length; i++) {
         if (
           localStorage.key(i) !== "loglevel:webpack-dev-server" &&
           localStorage.key(i) !== "csCursors" &&
-          localStorage.key(i) !== "csPointers"
+          localStorage.key(i) !== "csPointers" &&
+          localStorage.key(i) !== "userName"
         ) {
           this.todoItems.push(
             JSON.parse(localStorage.getItem(localStorage.key(i)))
@@ -118,7 +140,8 @@ export default {
     TodoInput,
     TodoController,
     TodoList,
-    TodoFooter
+    TodoFooter,
+    TodoHello
   }
 };
 </script>
