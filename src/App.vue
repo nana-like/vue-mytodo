@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="top">
+      <TodoHeader />
       <div v-if="userName">
-        <TodoHeader />
         <TodoTitle
           v-bind:propCount="checkCount"
           v-bind:propName="userName"
@@ -150,8 +150,9 @@ export default {
 @import "./assets/style/_reset";
 
 .top {
-  padding: 0 $padding 4.5rem;
   width: 100%;
+  min-height: 43.6rem;
+  padding: 0 $padding 4.5rem;
   background-image: linear-gradient(145deg, #3770cc 20%, #ce91c9 84%);
 }
 

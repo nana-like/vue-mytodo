@@ -11,6 +11,7 @@ module.exports = {
           @import "~@/assets/style/_variables.scss";
           @import "~@/assets/style/_mediaQueries.scss";
           @import "~@/assets/style/_svg.scss";
+          @import "~@/assets/style/_common.scss";
         `
       }
     }

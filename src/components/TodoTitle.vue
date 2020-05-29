@@ -1,7 +1,7 @@
 <template>
   <div class="title">
     <p class="title__text">
-      <span class="title__message">{{ message }},</span>
+      <span class="title__message">Good {{ message }},</span>
       <span
         v-on:keyup.enter="handleName"
         v-on:blur="handleBlur"
@@ -23,26 +23,33 @@
 </template>
 
 <script>
+import getDate from "../assets/commonJS/getDate.js";
+
 export default {
   props: ["propCount", "propName"],
   data() {
     return {
-      message: "Good morning"
+      message: ""
     };
   },
   methods: {
     handleBlur(e) {
       const originalName = this.propName;
       const newName = e.target.innerText;
-      if (newName === "") {
-        e.target.innerText = originalName;
-      } else {
-        this.$emit("changeName", newName);
+      if (newName !== originalName) {
+        if (newName === "") {
+          e.target.innerText = originalName;
+        } else {
+          this.$emit("changeName", newName);
+        }
       }
     },
     handleName() {
       this.$refs.test.blur();
     }
+  },
+  mounted() {
+    this.message = getDate().daytime;
   }
 };
 </script>

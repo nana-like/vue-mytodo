@@ -1,15 +1,17 @@
 <template>
   <div class="add">
-    <input
-      type="text"
-      class="add__input"
-      placeholder="Enter your task here"
-      v-model="newTodoItem"
-      v-on:keyup.enter="addTodoItem"
-    />
-    <button class="add__button" v-on:click="addTodoItem">
-      <span class="blind">Add</span>
-    </button>
+    <div class="main-input">
+      <input
+        type="text"
+        class="add__input main-input-type"
+        placeholder="Enter your task here"
+        v-model="newTodoItem"
+        v-on:keyup.enter="addTodoItem"
+      />
+      <button class="add__button main-input-button" v-on:click="addTodoItem">
+        <span class="blind">Add</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -41,44 +43,9 @@ export default {
   margin: 0 auto;
 
   &__input {
-    display: block;
-    width: 100%;
-    font-size: 1.5rem;
-    box-sizing: border-box;
-    padding: 0 4.2rem 0 2.5rem;
-    height: 5.2rem;
-    border-radius: 30px;
-    background-color: rgba(255, 255, 255, 0.48);
-    box-shadow: 0 15px 45px 0 rgba(0, 0, 0, 0.27);
-    border: 0;
-    outline: 0;
-    transition: background-color 0.3s;
-    cursor: text;
-
-    @include placeholder {
-      letter-spacing: 0.04rem;
-      font-family: "Muli", sans-serif;
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    &:focus {
-      background-color: rgba(255, 255, 255, 0.64);
-    }
   }
 
   &__button {
-    position: absolute;
-    top: 50%;
-    right: 1.2rem;
-    transform: translateY(-50%);
-    width: 3.3rem;
-    height: 3.3rem;
-    background-color: #fafafa;
-    border-radius: 50%;
-    background-size: 1.62rem 1.62rem;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    background-image: icon("arrow", "717171");
   }
 }
 </style>
