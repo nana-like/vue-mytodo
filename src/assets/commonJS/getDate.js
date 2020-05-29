@@ -16,9 +16,9 @@ export default () => {
   const hour = now.getHours();
   let daytime = "";
 
-  if (hour >= 4 && hour <= 12) {
+  if (hour < 12) {
     daytime = 'morning';
-  } else if (hour >= 12 && hour <= 20) {
+  } else if (hour < 18) {
     daytime = 'afternoon';
   } else {
     daytime = 'evening';

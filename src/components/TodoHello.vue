@@ -8,14 +8,14 @@
     <label for="user-name">Name</label>
     <div class="main-input">
       <input
-        class="hello__input main-input-type"
+        class="hello__input"
         type="text"
         id="user-name"
         placeholder="Let me know your name"
         v-model="userName"
         v-on:keyup.enter="addUserName"
       />
-      <button class="hello__button main-input-button">
+      <button class="hello__button">
         <span class="blind">Enter</span>
       </button>
     </div>

@@ -9,6 +9,7 @@
         ref="test"
         contenteditable="true"
       >{{ propName }}</span>
+      .
     </p>
     <p class="title__task">
       <span class="title__task-top">You've got</span>
@@ -16,7 +17,10 @@
         <em class="title__task-left">{{ propCount.left }}</em>
         <em v-if="propCount.total" class="title__task-total">&nbsp;/ {{ propCount.total }}</em>
       </span>
-      <span class="title__task-bottom">tasks today !</span>
+      <span class="title__task-bottom">
+        <span v-if="propCount.total > 1">tasks</span>
+        <span v-else>task</span> today !
+      </span>
       <span class="title__task-info"></span>
     </p>
   </div>

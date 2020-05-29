@@ -17,12 +17,16 @@
     <div class="body">
       <TodoController v-on:sortItem="sortAllItem" v-on:clearAll="clearAllItem" />
       <TodoList
-        v-bind:propsdata="todoItems"
+        v-bind:propItems="todoItems"
         v-on:removeItem="removeOneItem"
         v-on:toggleItem="toggleOneItem"
+        v-bind:propEmpty="isEmpty"
       />
       <TodoFooter />
     </div>
+    <Modal>
+      <template v-slot:modal-text>I think you've already had the task.</template>
+    </Modal>
   </div>
 </template>
 
@@ -34,6 +38,7 @@ import TodoController from "./components/TodoController";
 import TodoList from "./components/TodoList";
 import TodoFooter from "./components/TodoFooter";
 import TodoHello from "./components/TodoHello";
+import Modal from "./components/common/Modal";
 
 import getDate from "./assets/commonJS/getDate.js";
 
@@ -46,6 +51,9 @@ export default {
     };
   },
   computed: {
+    isEmpty() {
+      return this.todoItems.length <= 0 ? true : false;
+    },
     checkCount() {
       const checkLeftItems = () => {
         let leftCount = 0;
@@ -66,6 +74,11 @@ export default {
   },
   methods: {
     addOneItem(todoItem) {
+      for (let i = 0; i < this.todoItems.length; i++) {
+        if (this.todoItems[i].item === todoItem) {
+          return false;
+        }
+      }
       var value = {
         item: todoItem,
         date: `${getDate().date} ${getDate().week}`,
@@ -85,7 +98,9 @@ export default {
     },
     clearAllItem() {
       this.todoItems = [];
+      const name = this.userName;
       localStorage.clear();
+      localStorage.setItem("userName", name);
     },
     sortTodoLatest() {
       this.todoItems.sort(function(a, b) {
@@ -141,7 +156,8 @@ export default {
     TodoController,
     TodoList,
     TodoFooter,
-    TodoHello
+    TodoHello,
+    Modal
   }
 };
 </script>

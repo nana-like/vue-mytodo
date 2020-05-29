@@ -1,6 +1,6 @@
 <template>
-  <ul class="list">
-    <li class="list__item" v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item">
+  <ul class="list" v-bind:class="listempty">
+    <li class="list__item" v-for="(todoItem, index) in propItems" v-bind:key="todoItem.item">
       <input
         type="checkbox"
         v-bind:id="todoItem.item"
@@ -23,7 +23,12 @@
 
 <script>
 export default {
-  props: ["propsdata"],
+  computed: {
+    listempty() {
+      return this.propEmpty ? "list--empty" : null;
+    }
+  },
+  props: ["propItems", "propEmpty"],
   methods: {
     removeTodo(todoItem, index) {
       this.$emit("removeItem", todoItem, index);
@@ -219,6 +224,18 @@ export default {
     font-size: 1.1rem;
     color: #939393;
     letter-spacing: 0.02rem;
+  }
+
+  &.list--empty {
+    &:after {
+      display: block;
+      text-align: center;
+      margin: 11rem 0 12rem;
+      font-size: 2.2rem;
+      color: #c4c4c4;
+      letter-spacing: 0.4rem;
+      content: "ଘ(੭˘꒳˘)੭✧";
+    }
   }
 }
 </style>

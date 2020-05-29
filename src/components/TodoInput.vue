@@ -3,12 +3,12 @@
     <div class="main-input">
       <input
         type="text"
-        class="add__input main-input-type"
+        class="add__input"
         placeholder="Enter your task here"
         v-model="newTodoItem"
         v-on:keyup.enter="addTodoItem"
       />
-      <button class="add__button main-input-button" v-on:click="addTodoItem">
+      <button class="add__buttonn" v-on:click="addTodoItem">
         <span class="blind">Add</span>
       </button>
     </div>
