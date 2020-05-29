@@ -4,20 +4,11 @@
       <span class="title__message">{{ message }},</span>
       <span
         v-on:keyup.enter="handleName"
-        v-on:blur="blur"
+        v-on:blur="handleBlur"
         class="title__name"
         ref="test"
         contenteditable="true"
       >{{ propName }}</span>
-
-      <!-- <input
-        class="title__name"
-        type="text"
-        v-on:keyup.enter="handleName"
-        v-on:blur="blur"
-        ref="test"
-        v-bind:value="propName"
-      />-->
     </p>
     <p class="title__task">
       <span class="title__task-top">You've got</span>
@@ -40,30 +31,18 @@ export default {
     };
   },
   methods: {
-    blur(e) {
+    handleBlur(e) {
       const originalName = this.propName;
-      console.dir("블러");
-      let newName = e.target.innerText;
-      // let newName = e.target.value;
+      const newName = e.target.innerText;
       if (newName === "") {
-        console.dir(originalName);
         e.target.innerText = originalName;
-        // e.target.value = originalName;
       } else {
         this.$emit("changeName", newName);
       }
     },
     handleName() {
-      console.dir("엔터");
-      // document.execCommand("insertHTML", false, "<br/>");
-      // this.$emit("changeName", e.target.value);
-
       this.$refs.test.blur();
     }
-    // type(e) {
-    //   this.size = e.target.value.length + 5;
-    //   console.dir(e.target.value.length);
-    // }
   }
 };
 </script>
