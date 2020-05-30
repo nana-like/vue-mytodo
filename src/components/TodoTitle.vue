@@ -33,10 +33,12 @@ export default {
   props: ["propCount", "propName"],
   data() {
     return {
+      //시간대별로 morning, afternoon, evening 출력
       message: ""
     };
   },
   methods: {
+    // 포커스아웃시, 입력된 이름을 userName으로 저장
     handleBlur(e) {
       const originalName = this.propName;
       const newName = e.target.innerText;
@@ -95,10 +97,7 @@ export default {
     color: inherit;
     font-size: inherit;
     min-width: 1rem;
-    // padding: 0 0.4rem;
     min-height: 2.7rem;
-    // max-width: 50%;
-    // width: 50%;
     overflow: hidden;
     @include flex-shrink(1);
 
@@ -129,6 +128,7 @@ export default {
     }
 
     &-count {
+      display: block;
       font-size: 5.4rem;
     }
 
@@ -141,6 +141,22 @@ export default {
       font-size: 2.8rem;
       line-height: 50%;
     }
+  }
+}
+
+//애니메이션 관리
+.title {
+  &__text {
+    @include animation(fadeShow, 500ms);
+  }
+  &__task-top {
+    @include animation(fadeShow, 600ms, 1, 400ms);
+  }
+  &__task-count {
+    @include animation(fadeShow, 600ms, 1, 550ms);
+  }
+  &__task-bottom {
+    @include animation(fadeShow, 600ms, 1, 700ms);
   }
 }
 </style>

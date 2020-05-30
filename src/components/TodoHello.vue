@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
     <p class="hello__guide">
-      Nice to meet you!
-      <br />I’m going to remember your tasks.
+      <span class="hello__guide-text">Nice to meet you!</span>
+      <span class="hello__guide-text">I’m going to remember your tasks.</span>
     </p>
     <p class="hello__ask">What is your name?</p>
     <label for="user-name">Name</label>
@@ -56,10 +56,31 @@ export default {
     letter-spacing: 0.03rem;
   }
 
+  &__guide-text {
+    display: block;
+  }
+
   &__ask {
     font-size: 2.8rem;
     font-weight: bold;
     margin-bottom: 4rem;
+  }
+}
+
+//애니메이션 관리
+.hello {
+  &__guide-text {
+    @for $i from 1 through 2 {
+      &:nth-child(#{$i}) {
+        @include animation(fadeShow, 450ms, 1, #{$i * 200}ms);
+      }
+    }
+  }
+  &__ask {
+    @include animation(fadeShow, 750ms, 1, 900ms);
+  }
+  .main-input {
+    @include animation(fadeShow, 850ms, 1, 1100ms);
   }
 }
 </style>
