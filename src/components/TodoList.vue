@@ -1,5 +1,5 @@
 <template>
-  <ul class="list" v-bind:class="listempty">
+  <transition-group name="list" tag="ul" class="list" v-bind:class="listempty">
     <li class="list__item" v-for="(todoItem, index) in propItems" v-bind:key="todoItem.item">
       <input
         type="checkbox"
@@ -18,7 +18,7 @@
         <p class="list__date">{{ todoItem.date }}</p>
       </div>
     </li>
-  </ul>
+  </transition-group>
 </template>
 
 <script>
@@ -45,6 +45,17 @@ export default {
   position: relative;
   max-width: $max-width;
   margin: 2.1rem auto 0;
+
+  &:after {
+    opacity: 0;
+    display: block;
+    text-align: center;
+    font-size: 2.2rem;
+    color: #c4c4c4;
+    letter-spacing: 0.4rem;
+    content: "ଘ(੭˘꒳˘)੭✧";
+    transition: opacity 0s;
+  }
 
   &__item {
     position: relative;
@@ -86,7 +97,7 @@ export default {
 
   &__label {
     padding: 1.6rem 0;
-    font-size: 1.7rem;
+    font-size: 1.65rem;
     line-height: 1.24;
     letter-spacing: 0.017rem;
     color: #141313;
@@ -228,14 +239,34 @@ export default {
 
   &.list--empty {
     &:after {
-      display: block;
-      text-align: center;
+      opacity: 1;
       margin: 11rem 0 12rem;
-      font-size: 2.2rem;
-      color: #c4c4c4;
-      letter-spacing: 0.4rem;
-      content: "ଘ(੭˘꒳˘)੭✧";
+      animation: emptyAnimation 1s 1s;
+      transition: opacity 1s 0.3s;
     }
   }
+}
+
+@keyframes emptyAnimation {
+  100% {
+    transform: translate3d(0, 0, 0) rotateY(360deg);
+  }
+}
+
+// ==== 트랜지션
+
+.list-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>
