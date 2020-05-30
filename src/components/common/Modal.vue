@@ -1,16 +1,29 @@
 <template>
-  <div class="modal">
-    <div class="modal__dim">
-      <div class="modal__container">
-        <div class="modal__content">
-          <p class="modal__text">
-            <slot name="modal-text">(여기에 모달 내용이 들어가요)</slot>
-          </p>
-          <button class="modal__close">OK</button>
+  <!-- <transition name="modal">
+    <div class="modal">
+      <div class="modal__dim">
+        <div class="modal__container">
+          <div class="modal__content">
+            <p class="modal__text">
+              <slot name="modal-text">(여기에 모달 내용이 들어가요)</slot>
+            </p>
+            <button class="modal__close" v-on:click="$emit('close')">OK</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>-->
+
+  <transition name="modal" appear>
+    <div class="modal modal__dim" v-on:click.self="$emit('close')">
+      <div class="modal__content">
+        <p class="modal__text">
+          <slot name="modal-text">(여기에 모달 내용이 들어가요)</slot>
+        </p>
+        <button class="modal__close" v-on:click="$emit('close')">OK</button>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -20,6 +33,9 @@ export default {};
 <style lang="scss">
 .modal {
   &__dim {
+    @include flexbox;
+    @include justify-content(center);
+    @include align-items(center);
     position: fixed;
     z-index: 999;
     top: 0;
@@ -27,16 +43,6 @@ export default {};
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4);
-    display: table;
-    // transition: opacity .3s ease;
-  }
-
-  &__container {
-    width: 100%;
-    height: 100%;
-    @include flexbox;
-    @include justify-content(center);
-    @include align-items(center);
   }
 
   &__content {
@@ -46,7 +52,7 @@ export default {};
     background-color: #fff;
     border-radius: 2px;
     box-shadow: 0 10px 30px -4px rgba(10, 10, 10, 0.2);
-    // transition: all .3s ease;
+    transition: all 0.3s ease;
   }
 
   &__text {
@@ -84,6 +90,34 @@ export default {};
       color: #323232;
       border-color: #4a4a4a;
     }
+  }
+}
+
+// ---- 트랜지션 정의 ----
+
+.modal-enter {
+  opacity: 0;
+
+  .modal__content {
+    transform: translateY(30px);
+    transition: transform 0.6s;
+  }
+}
+
+.modal-enter-active {
+  transition: opacity 0.3s;
+}
+
+.modal-leave-active {
+  transition: opacity 0.3s 0.05s;
+}
+
+.modal-leave-to {
+  opacity: 0;
+
+  .modal__content {
+    transform: translateY(30px);
+    transition: transform 0.6s;
   }
 }
 </style>
