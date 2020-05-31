@@ -4,7 +4,7 @@
       <TodoHeader />
       <div v-if="this.checkName">
         <TodoTitle v-bind:propCount="checkCount" />
-        <TodoInput />
+        <TodoInput v-on:alertModal="showModal" />
       </div>
       <div v-else>
         <TodoHello />
@@ -17,7 +17,7 @@
       </div>
       <TodoFooter />
     </div>
-    <Modal v-if="showModal" v-on:close="showModal = false">
+    <Modal v-if="modalVisible" v-on:close="modalVisible = false">
       <template v-slot:modal-text>{{ modalText }}</template>
     </Modal>
   </div>
@@ -37,21 +37,21 @@ export default {
   name: "App",
   data() {
     return {
-      todoItems: [],
-      // userName: this.checkName,
-      showModal: false,
+      error: "",
+      modalVisible: false,
       modalText: ""
     };
   },
   computed: {
     isEmpty() {
-      return this.todoItems.length <= 0 ? true : false;
+      return this.$store.getters.getItemsLength <= 0 ? true : false;
     },
     checkCount() {
       const checkLeftItems = () => {
+        const items = this.$store.getters.getItems;
         let leftCount = 0;
-        for (let i = 0; i < this.todoItems.length; i++) {
-          if (this.todoItems[i].completed === false) {
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].completed === false) {
             leftCount++;
           }
         }
@@ -59,16 +59,37 @@ export default {
       };
 
       const count = {
-        total: this.todoItems.length,
+        total: this.$store.getters.getItemsLength,
         left: checkLeftItems()
       };
       return count;
     },
     checkName() {
       return this.$store.getters.getName;
+    },
+    checkModal() {
+      return this.$store.state.showModal;
+    }
+    // checkError() {
+    //   return this.$store.state.error.alert;
+    // },
+    // checkModal() {
+    //   if (this.checkError) {
+    //     return this.$store.state.error.message;
+    //   } else {
+    //     return false;
+    //   }
+    // }
+  },
+  methods: {
+    showModal(text) {
+      this.modalText = text;
+      this.modalVisible = !this.modalVisible;
     }
   },
-  mounted() {},
+  mounted() {
+    this.$store.commit("sortTodoOldest");
+  },
   components: {
     TodoHeader,
     TodoTitle,

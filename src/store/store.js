@@ -38,32 +38,45 @@ const storage = {
 export const store = new Vuex.Store({
   state: {
     todoItems: storage.fetch(),
+    userName: storage.fetchName(),
     showModal: false,
-    modalText: '',
-    userName: storage.fetchName()
+    error: {
+      alert: false,
+      type: '',
+      message: ''
+    }
   },
   getters: {
-    getName: state => {
+    getName(state) {
       return state.userName
+    },
+    getItems(state) {
+      return state.todoItems;
+    },
+    getItemsLength(state) {
+      return state.todoItems.length;
     }
   },
   mutations: {
     // 아이템 하나 추가
     addOneItem(state, todoItem) {
-      // 빈 내용인 경우
-      if (todoItem === "") {
-        state.showModal = !this.showModal;
-        state.modalText = "The form is empty. Please enter your task.";
-        return false;
-      }
-      // 중복되는 내용인 경우
-      for (let i = 0; i < state.todoItems.length; i++) {
-        if (state.todoItems[i].item === todoItem) {
-          state.showModal = !this.showModal;
-          state.modalText = "I think you've already had the task.";
-          return false;
-        }
-      }
+      // // 빈 내용인 경우
+      // if (todoItem === "") {
+      //   state.showModal = true;
+      //   // state.error.aleart = true;
+      //   // state.error.message = "비었다"
+      //   // state.modal.visible = !state.modal.visible;
+      //   // state.modal.text = "The form is empty. Please enter your task.";
+      //   return false;
+      // }
+      // // 중복되는 내용인 경우
+      // for (let i = 0; i < state.todoItems.length; i++) {
+      //   if (state.todoItems[i].item === todoItem) {
+      //     state.showModal = !this.showModal;
+      //     state.modalText = "I think you've already had the task.";
+      //     return false;
+      //   }
+      // }
       // 저장할 정보
       var value = {
         item: todoItem,
@@ -107,8 +120,6 @@ export const store = new Vuex.Store({
     setUserName(state, userName) {
       localStorage.setItem("userName", userName);
       state.userName = userName;
-      console.log(state.userName + "은 state.userName다")
-      console.log(store.getters.getName);
     },
   }
 });

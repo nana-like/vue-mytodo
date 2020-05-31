@@ -27,7 +27,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  // props: {
+  //   visible: {
+  //     type: Boolean,
+  //     default: false
+  //   },
+  //   text: {
+  //     type: String
+  //   }
+  // }
+};
 </script>
 
 <style lang="scss">
