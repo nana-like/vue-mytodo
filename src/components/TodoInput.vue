@@ -6,7 +6,8 @@
         class="add__input"
         placeholder="Enter your task here"
         v-model="newTodoItem"
-        v-on:keyup.enter="addTodoItem"
+        v-on:keypress.enter="addTodoItem"
+        ref="taskInput"
       />
       <button class="add__buttonn" v-on:click="addTodoItem">
         <span class="blind">Add</span>
@@ -24,10 +25,9 @@ export default {
   },
   methods: {
     addTodoItem() {
-      if (this.newTodoItem !== "") {
-        this.$emit("addItem", this.newTodoItem);
-        this.clearInput();
-      }
+      this.$emit("addItem", this.newTodoItem);
+      this.clearInput();
+      this.$refs.taskInput.focus();
     },
     clearInput() {
       this.newTodoItem = "";
@@ -42,10 +42,8 @@ export default {
   max-width: $max-width;
   margin: 0 auto;
 
-  &__input {
-  }
-
-  &__button {
+  .main-input {
+    @include animation(fadeShow, 800ms, 1, 900ms);
   }
 }
 </style>

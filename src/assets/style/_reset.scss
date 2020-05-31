@@ -106,7 +106,7 @@ summary,
 textarea {
   -ms-touch-action: manipulation;
   touch-action: manipulation;
-  font-family: "Muli", sans-serif;
+  font-family: "Muli", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
 
 html {
@@ -124,7 +124,7 @@ html {
   font-size: 62.5%; //1em = 10px로 설정
 
   @include res {
-    font-size: 75%;
+    font-size: 73%;
   }
 }
 

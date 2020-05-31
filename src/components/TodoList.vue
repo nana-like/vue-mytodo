@@ -196,11 +196,11 @@ export default {
     position: relative;
     width: 1rem;
     height: 1rem;
-    padding: 0.25rem;
+    padding: 0.4rem;
     padding-right: 0;
     box-sizing: content-box;
     margin-left: auto;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
 
     &:before,
     &:after {
@@ -210,8 +210,8 @@ export default {
       display: block;
       content: "";
       width: 0.1rem;
-      height: 1.1rem;
-      background-color: #ccc;
+      height: 1.2rem;
+      background-color: rgb(184, 184, 184);
       transition: background-color 0.15s;
     }
 
