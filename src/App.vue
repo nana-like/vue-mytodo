@@ -1,28 +1,19 @@
 <template>
   <div id="app">
-    <div ref="back" class="top">
+    <div class="top">
       <TodoHeader />
-      <div v-if="userName">
-        <TodoTitle
-          v-bind:propCount="checkCount"
-          v-bind:propName="userName"
-          v-on:changeName="changeUserName"
-        />
-        <TodoInput v-on:addItem="addOneItem" />
+      <div v-if="this.checkName">
+        <TodoTitle v-bind:propCount="checkCount" />
+        <TodoInput />
       </div>
       <div v-else>
-        <TodoHello v-on:addName="addUserName" />
+        <TodoHello />
       </div>
     </div>
     <div class="body">
-      <div v-if="userName">
-        <TodoController v-on:sortItem="sortAllItem" v-on:clearAll="clearAllItem" />
-        <TodoList
-          v-bind:propItems="todoItems"
-          v-on:removeItem="removeOneItem"
-          v-on:toggleItem="toggleOneItem"
-          v-bind:propEmpty="isEmpty"
-        />
+      <div v-if="this.checkName">
+        <TodoController />
+        <TodoList v-bind:propEmpty="isEmpty" />
       </div>
       <TodoFooter />
     </div>
@@ -42,14 +33,12 @@ import TodoFooter from "./components/TodoFooter";
 import TodoHello from "./components/TodoHello";
 import Modal from "./components/common/Modal";
 
-import getDate from "./assets/commonJS/getDate.js";
-
 export default {
   name: "App",
   data() {
     return {
       todoItems: [],
-      userName: "",
+      // userName: this.checkName,
       showModal: false,
       modalText: ""
     };
@@ -74,108 +63,12 @@ export default {
         left: checkLeftItems()
       };
       return count;
+    },
+    checkName() {
+      return this.$store.getters.getName;
     }
   },
-  methods: {
-    // 아이템 하나 추가
-    addOneItem(todoItem) {
-      // 빈 내용인 경우
-      if (todoItem === "") {
-        this.showModal = !this.showModal;
-        this.modalText = "The form is empty. Please enter your task.";
-        return false;
-      }
-      // 중복되는 내용인 경우
-      for (let i = 0; i < this.todoItems.length; i++) {
-        if (this.todoItems[i].item === todoItem) {
-          this.showModal = !this.showModal;
-          this.modalText = "I think you've already had the task.";
-          return false;
-        }
-      }
-      // 저장할 정보
-      var value = {
-        item: todoItem,
-        date: `${getDate().date} ${getDate().week}`,
-        time: getDate().time,
-        completed: false
-      };
-      localStorage.setItem(todoItem, JSON.stringify(value));
-      this.todoItems.push(value);
-    },
-    // 아이템 하나 삭제
-    removeOneItem(todoItem, index) {
-      localStorage.removeItem(todoItem.item);
-      this.todoItems.splice(index, 1);
-    },
-    // 아이템 하나 완료 토글
-    toggleOneItem(todoItem) {
-      todoItem.completed = !todoItem.completed;
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
-    },
-    // 모든 아이템 삭제
-    clearAllItem() {
-      this.todoItems = [];
-      const name = this.userName;
-      localStorage.clear();
-      localStorage.setItem("userName", name);
-    },
-    // 최신순 정렬
-    sortTodoLatest() {
-      this.todoItems.sort(function(a, b) {
-        return b.time - a.time;
-      });
-    },
-    // 오래된 순 정렬
-    sortTodoOldest() {
-      this.todoItems.sort(function(a, b) {
-        return a.time - b.time;
-      });
-    },
-    // 선택된 값에 따라 아이템 정렬
-    sortAllItem(selectedSort) {
-      if (selectedSort.value === "date-desc") {
-        this.sortTodoLatest();
-      } else if (selectedSort.value === "date-asc") {
-        this.sortTodoOldest();
-      }
-    },
-    // 사용자 이름 추가
-    addUserName(userName) {
-      localStorage.setItem("userName", userName);
-      this.userName = userName;
-    },
-    // 사용자 이름 변경
-    changeUserName(userName) {
-      localStorage.setItem("userName", userName);
-      this.userName = userName;
-    }
-  },
-  created() {
-    // 로컬 스토리지의 사용자 이름 가져오기
-    this.userName = localStorage.getItem("userName");
-
-    // 로컬 스토리지의 아이템 목록 뿌리기
-    if (localStorage.length > 0) {
-      for (let i = 0; i < localStorage.length; i++) {
-        if (
-          localStorage.key(i) !== "loglevel:webpack-dev-server" &&
-          localStorage.key(i) !== "csCursors" &&
-          localStorage.key(i) !== "csPointers" &&
-          localStorage.key(i) !== "userName"
-        ) {
-          this.todoItems.push(
-            JSON.parse(localStorage.getItem(localStorage.key(i)))
-          );
-        }
-      }
-    }
-  },
-  mounted() {
-    this.sortTodoOldest();
-
-    // background(this.$refs.back);
-  },
+  mounted() {},
   components: {
     TodoHeader,
     TodoTitle,

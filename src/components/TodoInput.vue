@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     addTodoItem() {
-      this.$emit("addItem", this.newTodoItem);
+      this.$store.commit("addOneItem", this.newTodoItem);
       this.clearInput();
       this.$refs.taskInput.focus();
     },

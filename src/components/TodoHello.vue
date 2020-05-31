@@ -13,7 +13,7 @@
         id="user-name"
         placeholder="Let me know your name"
         v-model="userName"
-        v-on:keyup.enter="addUserName"
+        v-on:keypress.enter="addUserName"
       />
       <button class="hello__button">
         <span class="blind">Enter</span>
@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     addUserName() {
-      this.$emit("addName", this.userName);
+      this.$store.commit("setUserName", this.userName);
     }
   }
 };

@@ -8,7 +8,7 @@
         class="title__name"
         ref="test"
         contenteditable="true"
-      >{{ propName }}</span>
+      >{{ this.$store.getters.getName }}</span>
       .
     </p>
     <p class="title__task">
@@ -30,7 +30,7 @@
 import getDate from "../assets/commonJS/getDate.js";
 
 export default {
-  props: ["propCount", "propName"],
+  props: ["propCount"],
   data() {
     return {
       //시간대별로 morning, afternoon, evening 출력
@@ -46,7 +46,8 @@ export default {
         if (newName === "") {
           e.target.innerText = originalName;
         } else {
-          this.$emit("changeName", newName);
+          // this.$emit("changeName", newName);
+          this.$store.commit("setUserName", newName);
         }
       }
     },

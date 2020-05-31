@@ -1,6 +1,10 @@
 <template>
   <transition-group name="list" tag="ul" class="list" v-bind:class="listempty">
-    <li class="list__item" v-for="(todoItem, index) in propItems" v-bind:key="todoItem.item">
+    <li
+      class="list__item"
+      v-for="(todoItem, index) in this.$store.state.todoItems"
+      v-bind:key="todoItem.item"
+    >
       <input
         type="checkbox"
         v-bind:id="todoItem.item"
@@ -31,10 +35,16 @@ export default {
   props: ["propItems", "propEmpty"],
   methods: {
     removeTodo(todoItem, index) {
-      this.$emit("removeItem", todoItem, index);
+      this.$store.commit("removeOneItem", {
+        todoItem,
+        index
+      });
     },
-    toggleComplete(todoItem) {
-      this.$emit("toggleItem", todoItem);
+    toggleComplete(todoItem, index) {
+      this.$store.commit("toggleOneItem", {
+        todoItem,
+        index
+      });
     }
   }
 };

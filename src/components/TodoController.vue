@@ -20,10 +20,15 @@ export default {
   },
   methods: {
     sortTodo() {
-      this.$emit("sortItem", { value: this.selected });
+      // 선택된 값에 따라 아이템 정렬
+      if (this.selected === "date-desc") {
+        this.$store.commit("sortTodoLatest");
+      } else if (this.selected === "date-asc") {
+        this.$store.commit("sortTodoOldest");
+      }
     },
     clearTodo() {
-      this.$emit("clearAll");
+      this.$store.commit("clearAllItem");
     }
   }
 };
