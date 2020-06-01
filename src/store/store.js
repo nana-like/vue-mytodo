@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
   state: {
     todoItems: storage.fetch(),
     userName: storage.fetchName(),
+    todoOldestOrder: true
   },
   getters: getters,
   mutations: mutations

@@ -9,7 +9,11 @@ const addOneItem = (state, todoItem) => {
     completed: false
   };
   localStorage.setItem(todoItem, JSON.stringify(value));
-  state.todoItems.push(value);
+  if (state.todoOldestOrder === false) {
+    state.todoItems.unshift(value);
+  } else {
+    state.todoItems.push(value);
+  }
 }
 // 아이템 하나 삭제
 const removeOneItem = (state, payload) => {
@@ -23,19 +27,21 @@ const toggleOneItem = (state, payload) => {
 }
 // 모든 아이템 삭제
 const clearAllItem = (state) => {
+  const name = state.userName;
   state.todoItems = [];
-  const name = this.userName;
   localStorage.clear();
   localStorage.setItem("userName", name);
 }
 // 최신순 정렬
 const sortTodoLatest = (state) => {
+  state.todoOldestOrder = false;
   state.todoItems.sort(function (a, b) {
     return b.time - a.time;
   });
 }
 // 오래된 순 정렬
 const sortTodoOldest = (state) => {
+  state.todoOldestOrder = true;
   state.todoItems.sort(function (a, b) {
     return a.time - b.time;
   });
