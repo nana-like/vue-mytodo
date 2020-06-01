@@ -30,22 +30,21 @@ export default {
   },
   methods: {
     addTodoItem() {
-      // 빈 내용인 경우
-      if (this.newTodoItem === "") {
-        const text = "The form is empty. Please note your task.";
-        this.$emit("alertModal", text);
-        this.clearInput();
-        return false;
-      }
       // 중복되는 내용인 경우
       const oldItems = this.storedTodoItems;
       for (let i = 0; i < this.storedTodoItemsCount; i++) {
         if (oldItems[i].item === this.newTodoItem) {
           const text = "I think you've already had the task.";
           this.$emit("alertModal", text);
-          this.clearInput();
           return false;
         }
+      }
+      // 빈 내용인 경우
+      if (this.newTodoItem === "") {
+        const text = "The form is empty. Please note your task.";
+        this.$emit("alertModal", text);
+        this.clearInput();
+        return false;
       }
       this.$store.commit("addOneItem", this.newTodoItem);
       this.clearInput();

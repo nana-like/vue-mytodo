@@ -14,11 +14,14 @@
     <p class="title__task">
       <span class="title__task-top">You've got</span>
       <span class="title__task-count">
-        <em class="title__task-left">{{ propCount.left }}</em>
-        <em v-if="propCount.total" class="title__task-total">&nbsp;/ {{ propCount.total }}</em>
+        <em class="title__task-left">{{ this.todoItemsCount.left }}</em>
+        <em
+          v-if="this.todoItemsCount.total"
+          class="title__task-total"
+        >&nbsp;/ {{ this.todoItemsCount.total }}</em>
       </span>
       <span class="title__task-bottom">
-        <span v-if="propCount.total > 1">tasks</span>
+        <span v-if="this.todoItemsCount.total > 1">tasks</span>
         <span v-else>task</span> today !
       </span>
       <span class="title__task-info"></span>
@@ -30,7 +33,6 @@
 import getDate from "../assets/commonJS/getDate.js";
 
 export default {
-  props: ["propCount"],
   data() {
     return {
       //시간대별로 morning, afternoon, evening 출력
@@ -54,6 +56,27 @@ export default {
     },
     handleEnter() {
       this.$refs.test.blur();
+    }
+  },
+  computed: {
+    // 할 일 목록 수 표시
+    todoItemsCount() {
+      const checkLeftItems = () => {
+        const items = this.$store.getters.storedTodoItems;
+        let leftCount = 0;
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].completed === false) {
+            leftCount++;
+          }
+        }
+        return leftCount;
+      };
+
+      const count = {
+        total: this.$store.getters.storedTodoItemsCount,
+        left: checkLeftItems()
+      };
+      return count;
     }
   },
   mounted() {

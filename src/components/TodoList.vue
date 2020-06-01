@@ -40,6 +40,9 @@ export default {
       removeTodo: "removeOneItem",
       toggleComplete: "toggleOneItem"
     })
+  },
+  mounted() {
+    this.$store.commit("sortTodoOldest");
   }
 };
 </script>
