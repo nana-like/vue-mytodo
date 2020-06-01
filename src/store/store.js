@@ -47,6 +47,9 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
+    storedTodoItems(state) {
+      return state.todoItems;
+    },
     getName(state) {
       return state.userName
     },
@@ -60,24 +63,6 @@ export const store = new Vuex.Store({
   mutations: {
     // 아이템 하나 추가
     addOneItem(state, todoItem) {
-      // // 빈 내용인 경우
-      // if (todoItem === "") {
-      //   state.showModal = true;
-      //   // state.error.aleart = true;
-      //   // state.error.message = "비었다"
-      //   // state.modal.visible = !state.modal.visible;
-      //   // state.modal.text = "The form is empty. Please enter your task.";
-      //   return false;
-      // }
-      // // 중복되는 내용인 경우
-      // for (let i = 0; i < state.todoItems.length; i++) {
-      //   if (state.todoItems[i].item === todoItem) {
-      //     state.showModal = !this.showModal;
-      //     state.modalText = "I think you've already had the task.";
-      //     return false;
-      //   }
-      // }
-      // 저장할 정보
       var value = {
         item: todoItem,
         date: `${getDate().date} ${getDate().week}`,
