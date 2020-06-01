@@ -30,29 +30,16 @@ import { mapGetters, mapMutations } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters(["storedTodoItems"]),
+    ...mapGetters(["storedTodoItems", "storedTodoItemsCount"]),
     listempty() {
-      return this.propEmpty ? "list--empty" : null;
+      return this.storedTodoItemsCount <= 0 ? "list--empty" : null;
     }
   },
-  props: ["propItems", "propEmpty"],
   methods: {
     ...mapMutations({
       removeTodo: "removeOneItem",
       toggleComplete: "toggleOneItem"
     })
-    // removeTodo(todoItem, index) {
-    //   this.$store.commit("removeOneItem", {
-    //     todoItem,
-    //     index
-    //   });
-    // },
-    // toggleComplete(todoItem, index) {
-    //   this.$store.commit("toggleOneItem", {
-    //     todoItem,
-    //     index
-    //   });
-    // }
   }
 };
 </script>

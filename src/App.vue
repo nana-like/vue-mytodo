@@ -13,7 +13,7 @@
     <div class="body">
       <div v-if="this.checkName">
         <TodoController />
-        <TodoList v-bind:propEmpty="isEmpty" />
+        <TodoList />
       </div>
       <TodoFooter />
     </div>
@@ -43,12 +43,9 @@ export default {
     };
   },
   computed: {
-    isEmpty() {
-      return this.$store.getters.getItemsLength <= 0 ? true : false;
-    },
     checkCount() {
       const checkLeftItems = () => {
-        const items = this.$store.getters.getItems;
+        const items = this.$store.getters.storedTodoItems;
         let leftCount = 0;
         for (let i = 0; i < items.length; i++) {
           if (items[i].completed === false) {
@@ -59,13 +56,13 @@ export default {
       };
 
       const count = {
-        total: this.$store.getters.getItemsLength,
+        total: this.$store.getters.storedTodoItemsCount,
         left: checkLeftItems()
       };
       return count;
     },
     checkName() {
-      return this.$store.getters.getName;
+      return this.$store.getters.storedName;
     },
     checkModal() {
       return this.$store.state.showModal;

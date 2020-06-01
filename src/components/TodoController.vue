@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -19,6 +21,9 @@ export default {
     };
   },
   methods: {
+    ...mapMutations({
+      clearTodo: "clearAllItem"
+    }),
     sortTodo() {
       // 선택된 값에 따라 아이템 정렬
       if (this.selected === "date-desc") {
@@ -26,9 +31,6 @@ export default {
       } else if (this.selected === "date-asc") {
         this.$store.commit("sortTodoOldest");
       }
-    },
-    clearTodo() {
-      this.$store.commit("clearAllItem");
     }
   }
 };

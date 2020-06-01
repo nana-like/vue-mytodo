@@ -17,11 +17,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   data() {
     return {
       newTodoItem: ""
     };
+  },
+  computed: {
+    ...mapGetters(["storedTodoItems", "storedTodoItemsCount"])
   },
   methods: {
     addTodoItem() {
@@ -33,8 +38,8 @@ export default {
         return false;
       }
       // 중복되는 내용인 경우
-      const oldItems = this.$store.getters.getItems;
-      for (let i = 0; i < oldItems.length; i++) {
+      const oldItems = this.storedTodoItems;
+      for (let i = 0; i < this.storedTodoItemsCount; i++) {
         if (oldItems[i].item === this.newTodoItem) {
           const text = "I think you've already had the task.";
           this.$emit("alertModal", text);
@@ -42,7 +47,6 @@ export default {
           return false;
         }
       }
-
       this.$store.commit("addOneItem", this.newTodoItem);
       this.clearInput();
       this.$refs.taskInput.focus();

@@ -50,14 +50,11 @@ export const store = new Vuex.Store({
     storedTodoItems(state) {
       return state.todoItems;
     },
-    getName(state) {
-      return state.userName
+    storedName(state) {
+      return state.userName;
     },
-    getItems(state) {
-      return state.todoItems;
-    },
-    getItemsLength(state) {
-      return state.todoItems.length;
+    storedTodoItemsCount(state, getters) {
+      return getters.storedTodoItems.length;
     }
   },
   mutations: {

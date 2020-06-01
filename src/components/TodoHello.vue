@@ -13,7 +13,7 @@
         id="user-name"
         placeholder="Let me know your name"
         v-model="userName"
-        v-on:keypress.enter="addUserName"
+        v-on:keypress.enter="addUserName(userName)"
       />
       <button class="hello__button">
         <span class="blind">Enter</span>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -30,9 +32,12 @@ export default {
     };
   },
   methods: {
-    addUserName() {
-      this.$store.commit("setUserName", this.userName);
-    }
+    ...mapMutations({
+      addUserName: "setUserName"
+    })
+    // addUserName() {
+    //   this.$store.commit("setUserName", this.userName);
+    // }
   }
 };
 </script>

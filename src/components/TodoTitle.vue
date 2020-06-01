@@ -3,12 +3,12 @@
     <p class="title__text">
       <span class="title__message">Good {{ message }},</span>
       <span
-        v-on:keyup.enter="handleName"
+        v-on:keyup.enter="handleEnter"
         v-on:blur="handleBlur"
         class="title__name"
         ref="test"
         contenteditable="true"
-      >{{ this.$store.getters.getName }}</span>
+      >{{ this.userName }}</span>
       .
     </p>
     <p class="title__task">
@@ -34,24 +34,25 @@ export default {
   data() {
     return {
       //시간대별로 morning, afternoon, evening 출력
-      message: ""
+      message: "",
+      // 저장된 userName 가져옴
+      userName: this.$store.getters.storedName
     };
   },
   methods: {
     // 포커스아웃시, 입력된 이름을 userName으로 저장
     handleBlur(e) {
-      const originalName = this.propName;
+      const originalName = this.userName;
       const newName = e.target.innerText;
       if (newName !== originalName) {
         if (newName === "") {
           e.target.innerText = originalName;
         } else {
-          // this.$emit("changeName", newName);
           this.$store.commit("setUserName", newName);
         }
       }
     },
-    handleName() {
+    handleEnter() {
       this.$refs.test.blur();
     }
   },
